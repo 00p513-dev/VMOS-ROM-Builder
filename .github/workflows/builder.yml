@@ -1,90 +1,97 @@
-name: CI
-
+name: Building ROM
+ 
 on: push
 
-  build:
+env:
+  TZ: America/Recife
+jobs: 
+  build: 
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      
-    - name: Downloading
-      run: |
-        sleep 1
-        sudo wget https://files.vmos.cn/vmospro/romVersion/2020061118512635416.zip
-        ls -l
-      
-    - name: Unziping
-      run: |
-        sudo mkdir temp
-        sudo unzip 2020061118512635416.zip -d temp
-        ls -l temp
-    - name: Building
-      run: |
-        sudo cd temp
-        # /
-        sudo rm -rf init.usb.rc
-        sudo rm -rf res
-        # /system/media
-        sudo rm -rf system/media
-        # /system/app
-        sudo rm -rf system/app/CaptivePortalLogin
-        sudo rm -rf system/app/CertInstaller
-        sudo rm -rf system/app/Gallery2
-        sudo rm -rf system/app/HTMLViewer
-        sudo rm -rf system/app/PicoTts
-        sudo rm -rf system/app/LatinIME
-        sudo rm -rf system/app/Launcher
-        sudo rm -rf system/app/com.baidu.input
-        sudo rm -rf system/app/DocumentsUI
-        sudo rm -rf system/app/DownloadProviderUi
-        sudo rm -rf system/app/UserDictionaryProvider
-        sudo rm -rf system/app/webview/lib/arm/libwebviewchromium.so
-        # Priv-App
-        sudo rm -rf system/priv-app/VpnDialogs
-        sudo rm -rf system/priv-app/TeleService
-        sudo rm -rf system/priv-app/TelephonyProvider
-        sudo rm -rf system/priv-app/Telecom
-        sudo rm -rf system/priv-app/SharedStorageBackup
-        sudo rm -rf system/priv-app/MmsService
-        sudo rm -rf system/priv-app/ExternalStorageProvider
-        sudo rm -rf system/priv-app/InputDevices
-        sudo rm -rf system/priv-app/ContactsProvider
-        sudo rm -rf system/priv-app/Contacts
-        sudo rm -rf system/priv-app/CalendarProvider
-        sudo rm -rf system/priv-app/Dialer
-        sudo rm -rf system/priv-app/CalendarProvider
-        # /system/bin/
-        sudo rm -rf system/bin/reboot
-        sudo rm -rf system/bin/ping6
-        
-        # /system/fonts
-        sudo rm -rf system/fonts/*
-        sudo wget -q https://github.com/Flytreels/AutoBuild-VMOSLiteROM/raw/master/fonts.zip
-        sudo unzip fonts.zip -d system/fonts/
-        sudo rm -rf fonts.zip
-        
-        # /system/xbin
-        sudo rm -rf system/xbin/daemonsu_10
-        sudo rm -rf system/xbin/memtrack
-        sudo rm -rf system/xbin/strace
-        sudo rm -rf system/xbin/memtrack_share
-        sudo rm -rf system/xbin/dexdump
-        sudo rm -rf system/xbin/micro_bench
-        sudo rm -rf system/xbin/micro_bench_static
-        
-        # /system/usr/
-        sudo rm -rf system/usr/srec
-        
-    - name: Ziping
-      run: |
-        cd temp
-        ls
-        sleep 1
-        sudo zip -r rom.zip *
-        mv rom.zip ../
-        cd ..
-    - name: Uploading Rootfs
-      run: |
-       sudo curl -sL https://git.io/file-transfer | sh
-       ./transfer wet rom.zip
+    steps: 
+      - 
+        uses: actions/checkout@v2
+      - 
+        name: Downloading
+        run: |
+            sleep 1
+            sudo wget https://files.vmos.cn/vmospro/romVersion/2020061118512635416.zip
+            ls -l
+      - 
+        name: Unziping
+        run: |
+            sudo mkdir temp
+            sudo unzip 2020061118512635416.zip -d temp
+            ls -l temp
+      - 
+        name: Building
+        run: |
+            sudo cd temp
+            # /
+            sudo rm -rf init.usb.rc
+            sudo rm -rf res
+            # /system/media
+            sudo rm -rf system/media
+            # /system/app
+            sudo rm -rf system/app/CaptivePortalLogin
+            sudo rm -rf system/app/CertInstaller
+            sudo rm -rf system/app/Gallery2
+            sudo rm -rf system/app/HTMLViewer
+            sudo rm -rf system/app/PicoTts
+            sudo rm -rf system/app/LatinIME
+            sudo rm -rf system/app/Launcher
+            sudo rm -rf system/app/com.baidu.input
+            sudo rm -rf system/app/DocumentsUI
+            sudo rm -rf system/app/DownloadProviderUi
+            sudo rm -rf system/app/UserDictionaryProvider
+            sudo rm -rf system/app/webview/lib/arm/libwebviewchromium.so
+            # Priv-App
+            sudo rm -rf system/priv-app/VpnDialogs
+            sudo rm -rf system/priv-app/TeleService
+            sudo rm -rf system/priv-app/TelephonyProvider
+            sudo rm -rf system/priv-app/Telecom
+            sudo rm -rf system/priv-app/SharedStorageBackup
+            sudo rm -rf system/priv-app/MmsService
+            sudo rm -rf system/priv-app/ExternalStorageProvider
+            sudo rm -rf system/priv-app/InputDevices
+            sudo rm -rf system/priv-app/ContactsProvider
+            sudo rm -rf system/priv-app/Contacts
+            sudo rm -rf system/priv-app/CalendarProvider
+            sudo rm -rf system/priv-app/Dialer
+            sudo rm -rf system/priv-app/CalendarProvider
+            # /system/bin/
+            sudo rm -rf system/bin/reboot
+            sudo rm -rf system/bin/ping6
+            
+            # /system/fonts
+            sudo rm -rf system/fonts/*
+            sudo wget -q https://github.com/Flytreels/AutoBuild-VMOSLiteROM/raw/master/fonts.zip
+            sudo unzip fonts.zip -d system/fonts/
+            sudo rm -rf fonts.zip
+            
+            # /system/xbin
+            sudo rm -rf system/xbin/daemonsu_10
+            sudo rm -rf system/xbin/memtrack
+            sudo rm -rf system/xbin/strace
+            sudo rm -rf system/xbin/memtrack_share
+            sudo rm -rf system/xbin/dexdump
+            sudo rm -rf system/xbin/micro_bench
+            sudo rm -rf system/xbin/micro_bench_static
+            
+            # /system/usr/
+            sudo rm -rf system/usr/srec
+      - 
+        name: Ziping
+        run: |
+            cd temp
+            ls
+            sleep 1
+            sudo zip -r rom.zip *
+            mv rom.zip ../
+            cd ..
+      - 
+        name: "Uploading Rootfs"
+        run: |
+            sudo curl -sL https://git.io/file-transfer | sh
+            ./transfer wet rom.zip
+name: CI
+true: push
