@@ -25,12 +25,12 @@ jobs:
       - 
         name: Building
         run: |
-            sudo cd temp
+            cd temp
             # /
             sudo rm -rf init.usb.rc
             sudo rm -rf res
             # /system/media
-            sudo rm -rf system/media
+            sudo rm -rf system/media/bootanimation.zip
             # /system/app
             sudo rm -rf system/app/CaptivePortalLogin
             sudo rm -rf system/app/CertInstaller
