@@ -86,7 +86,7 @@ jobs:
             ls
             sleep 1
             sudo zip -r rom.zip *
-            mv rom.zip ../
+            sudo mv rom.zip ../
             cd ..
       - 
         name: "Uploading Rootfs"
